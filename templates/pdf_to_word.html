@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Word | FileConverter Pro</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="container nav-flex" style="display:flex;justify-content:space-between;align-items:center;">
+            <a class="logo" href="/" style="display:flex;align-items:center;text-decoration:none;">
+                <img src="https://raw.githubusercontent.com/nomanafridi941-ops/PickColoers/refs/heads/main/logo.webp"
+                    alt="FileConverter Pro Logo" style="height:40px;margin-right:12px;">
+            </a>
+            <ul class="nav-links" style="display:flex;list-style:none;gap:1.5rem;align-items:center;">
+                <li><a href="/">Home</a></li>
+                <li class="dropdown" id="toolsDropdown">
+                    <a href="/tools" class="dropdown-toggle" onclick="toggleToolsDropdown(event)">Tools <span
+                            class="dropdown-arrow">▼</span></a>
+                    <ul class="dropdown-menu">
+                        <li class="submenu">
+                            <a href="/document-category">📝 Document Converters ▸</a>
+                        </li>
+                        <!-- ...other categories... -->
+                    </ul>
+                </li>
+                <li><a href="/about/">About Us</a></li>
+                <li><a href="/terms/">Terms</a></li>
+                <li><a href="/contact/">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="home">
+            <section class="hero">
+                <h1>📄 PDF to Word</h1>
+                <p>Convert PDF files to editable Word documents.</p>
+            </section>
+            <div class="tool-container"
+                style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-height:400px;">
+                <form id="pdfToWordForm" autocomplete="off"
+                    style="display:flex;flex-direction:column;align-items:center;justify-content:center;max-width:420px;width:100%;margin:0 auto;">
+                    <label for="pdfFile"
+                        style="font-weight:800;color:#667eea;display:block;margin-bottom:0.9em;text-align:center;">Upload
+                        your PDF file</label>
+                    <div id="pdfDropZone"
+                        style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5em 1.2em;border:2.5px solid #764ba2;background:linear-gradient(135deg,#f5f7fa 60%,#e0c3fc 100%);box-shadow:0 2px 16px #e0c3fc33;border-radius:18px;transition:border-color 0.2s,box-shadow 0.2s;cursor:pointer;gap:0.9em;margin-bottom:1.3em;width:180%;max-width:680px;">
+                        <span id="fileIconContainer">
+                            <i id="pdfIcon" class="fa-solid fa-file-pdf" style="font-size:6.5em;color:#764ba2;"></i>
+                            <i id="wordIcon" class="fa-solid fa-file-word"
+                                style="font-size:6.5em;color:#2b579a;display:none;"></i>
+                        </span>
+                        <span style="color:#764ba2;font-weight:600; height:120px;text-align:center;">Drag & drop PDF
+                            here or <span style='text-decoration:underline;color:#667eea;'>browse</span></span>
+                        <input type="file" id="pdfFile" name="pdfFile" accept="application/pdf" required
+                            style="display:none;">
+                            <div id="fileNameDisplay"
+                        style="display:flex;justify-content:center;align-items:center;text-align:center;color:#764ba2;font-weight:900;margin-bottom:1em;margin-bottom:1em;">
+                    </div>
+                    </div>
+                    
+                    <button type="button" id="convertBtn"
+                        style="width:180%;padding:0.9em 0;font-size:1.1em;background:linear-gradient(90deg,#667eea,#764ba2);color:#fff;border:none;border-radius:8px;box-shadow:0 2px 8px #764ba233;cursor:pointer;font-weight:600;transition:background 0.2s;max-width:680px;">Convert</button>
+                    <div id="loadingSpinner" style="display:none;text-align:center;margin:1.2em 0;">
+                        <span class="loader"
+                            style="display:inline-block;width:32px;height:32px;border:4px solid #764ba2;border-top:4px solid #fff;border-radius:50%;animation:spin 1s linear infinite;"></span>
+                        <span style="display:block;color:#764ba2;font-weight:500;margin-top:0.7em;">Converting...</span>
+                    </div>
+                    <button type="button" id="downloadBtn"
+                        style="display:none;width:180%;padding:0.9em 0;font-size:1.1em;background:linear-gradient(90deg,#764ba2,#667eea);color:#fff;border:none;border-radius:8px;box-shadow:0 2px 8px #764ba233;cursor:pointer;font-weight:600;margin-top:1em;max-width:680px;">Download
+                        Word File</button>
+                </form>
+                <style>
+                    @keyframes spin {
+                        100% {
+                            transform: rotate(360deg);
+                        }
+                    }
+                </style>
+                <script>
+                    // Demo JS for UI feedback only
+                    const convertBtn = document.getElementById('convertBtn');
+                    const loadingSpinner = document.getElementById('loadingSpinner');
+                    const downloadBtn = document.getElementById('downloadBtn');
+                    const pdfFileInput = document.getElementById('pdfFile');
+                    const pdfIcon = document.getElementById('pdfIcon');
+                    const wordIcon = document.getElementById('wordIcon');
+                    let convertedFileName = '';
+let convertedFileContent = '';
+convertBtn.onclick = function () {
+    if (!pdfFileInput.files.length) {
+        alert('Please select a PDF file first.');
+        return;
+    }
+    convertBtn.style.display = 'none';
+    loadingSpinner.style.display = 'block';
+    // Read the uploaded file (for demo, just get the text content)
+    const file = pdfFileInput.files[0];
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        convertedFileContent = e.target.result;
+        setTimeout(() => {
+            loadingSpinner.style.display = 'none';
+            downloadBtn.style.display = 'block';
+            pdfIcon.style.display = 'none';
+            wordIcon.style.display = 'inline-block';
+            // Change file name to .docx
+            const baseName = file.name.replace(/\.[^.]+$/, '');
+            convertedFileName = baseName + '.docx';
+            fileNameDisplay.textContent = convertedFileName;
+        }, 1000); // Simulate conversion
+    };
+    reader.readAsText(file);
+};
+downloadBtn.onclick = function () {
+    // Download with the converted file name and content
+    const blob = new Blob([convertedFileContent], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = convertedFileName || 'converted.docx';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }, 100);
+};
+                    pdfFileInput.addEventListener('change', function () {
+                        const fileNameDisplay = document.getElementById('fileNameDisplay');
+                        if (pdfFileInput.files.length) {
+                            fileNameDisplay.textContent = pdfFileInput.files[0].name;
+                        } else {
+                            fileNameDisplay.textContent = '';
+                        }
+                    });
+                    document.getElementById('pdfDropZone').addEventListener('click', function(e) {
+    // Only trigger if not clicking the hidden input itself
+    if (e.target.tagName !== 'INPUT') {
+        document.getElementById('pdfFile').click();
+    }
+});
+                </script>
+
+            </div>
+    </main>
+    <footer id="contact">
+        <div class="main-home-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>⚙️ Converters</h3>
+                    <a href="/document-category/">📝 Document Converters</a>
+                    <a href="/image-category/">📷 Image Converters</a>
+                    <a href="/video-category/">🎬 Video Converters</a>
+                    <a href="/audio-category/">🎵 Audio Converters</a>
+                    <a href="/spreadsheet-category/">📊 Spreadsheet Converters</a>
+                    <a href="/archive-category/">📦 Archive Converters</a>
+                </div>
+                <div class="footer-section">
+                    <h3>📚 Articles</h3>
+                    <a href="/PDF-Converters/">📄 PDF Converters</a>
+                    <a href="/JPG-to-PNG/">🖼️ JPG to PNG</a>
+                    <a href="/Online-Converters/">⚡ Why Online Converters?</a>
+                    <a href="/Audio-&-Video-Tools/">🎬 Audio & Video Tools</a>
+                    <a href="/Privacy-&-Security/">🔒 Privacy & Security</a>
+                </div>
+                <div class="footer-section">
+                    <h3>🏢 Company</h3>
+                    <a href="/about/">🏢 About Us</a>
+                    <a href="/privacy/">🔒 Privacy Policy</a>
+                    <a href="/terms/">📄 Terms</a>
+                    <a href="/contact/">📞 Contact Us</a>
+                </div>
+            </div>
+            <div class="footer-bottom">© 2025 FileConverter Pro. All rights reserved.</div>
+        </div>
+    </footer>
+    <script src="/static/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Converters</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<!-- Header (PickColors style) -->
+    <header>
+        <nav class="container nav-flex" style="display:flex;justify-content:space-between;align-items:center;">
+            <a class="logo" href="/"
+                style="display:flex;align-items:center;text-decoration:none;">
+                <img src="https://raw.githubusercontent.com/nomanafridi941-ops/PickColoers/refs/heads/main/logo.webp"
+                    alt="FileConverter Pro Logo" style="height:40px;margin-right:12px;">
+            </a>
+            <ul class="nav-links" style="display:flex;list-style:none;gap:1.5rem;align-items:center;">
+                <li><a href="/">Home</a></li>
+
+
+                <li class="dropdown" id="toolsDropdown">
+                    <a href="/tools" class="dropdown-toggle" onclick="toggleToolsDropdown(event)">
+                        Tools <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- 🗂 Document Converters -->
+                        <li class="submenu">
+                            <a href="/document-category">📝 Document Converters ▸</a>
+                            <ul class="submenu-menu">
+                                <li><a href="/pdf-to-word">📝 PDF to Word</a>
+                                </li>
+                                <li><a href="/word-to-pdf">📝 Word to PDF</a>
+                                </li>
+                                <li><a href="/pdf-to-text">📝 PDF to Text</a>
+                                </li>
+                                <li><a href="/text-to-pdf">📝 Text to PDF</a>
+                                </li>
+                                <li><a href="/pdf-to-html">📝 PDF to HTML</a>
+                                </li>
+                                <li><a href="/html-to-pdf">📝 HTML to PDF</a>
+                                </li>
+                                <li><a href="/doc-to-docx">📝 DOC to DOCX</a>
+                                </li>
+                                <li><a href="/docx-to-doc">📝 DOCX to DOC</a>
+                                </li>
+                                <li><a href="/odt-to-pdf">📝 ODT to PDF</a>
+                                </li>
+                                <li><a href="/pdf-to-odt">📝 PDF to ODT</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 📷 Image Converters -->
+                        <li class="submenu">
+                            <a href="/image-category">📷 Image Converters ▸</a>
+                            <ul class="submenu-menu">
+                                <li><a href="/png-to-jpg">📷 PNG to JPG</a>
+                                </li>
+                                <li><a href="/jpg-to-png">📷 JPG to PNG</a>
+                                </li>
+                <li><a href="/image-to-webp">📷 Image to WebP</a></li>
+                <li><a href="/webp-to-image">📷 WebP to Image</a></li>
+                                <li><a href="/jpg-to-bmp">📷 JPG to BMP</a>
+                                </li>
+                                <li><a href="/bmp-to-jpg">📷 BMP to JPG</a>
+                                </li>
+                                <li><a href="/png-to-gif">📷 PNG to GIF</a>
+                                </li>
+                                <li><a href="/gif-to-png">📷 GIF to PNG</a>
+                                </li>
+                                <li><a href="/tiff-to-jpg">📷 TIFF to JPG</a>
+                                </li>
+                                <li><a href="/jpg-to-tiff">📷 JPG to TIFF</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 🎵 Audio Converters -->
+                        <li class="submenu">
+                            <a href="/audio-category">🎵 Audio Converters ▸</a>
+                            <ul class="submenu-menu">
+                                <li><a href="/mp3-to-wav">🎵 MP3 to WAV</a>
+                                </li>
+                                <li><a href="/wav-to-mp3">🎵 WAV to MP3</a>
+                                </li>
+                <li><a href="/audio-to-mp3">🎵 Audio to MP3</a></li>
+                <li><a href="/audio-to-wav">🎵 Audio to WAV</a></li>
+                                <li><a href="/flac-to-mp3">🎵 FLAC to MP3</a>
+                                </li>
+                                <li><a href="/mp3-to-flac">🎵 MP3 to FLAC</a>
+                                </li>
+                                <li><a href="/ogg-to-mp3">🎵 OGG to MP3</a>
+                                </li>
+                                <li><a href="/mp3-to-ogg">🎵 MP3 to OGG</a>
+                                </li>
+                                <li><a href="/aac-to-mp3">🎵 AAC to MP3</a>
+                                </li>
+                                <li><a href="/mp3-to-aac">🎵 MP3 to AAC</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 🎬 Video Converters -->
+                        <li class="submenu">
+                            <a href="/video-category">🎬 Video Converters ▸</a>
+                            <ul class="submenu-menu">
+                                <li><a href="/mp4-to-webm">🎬 MP4 to WebM</a>
+                                </li>
+                                <li><a href="/webm-to-mp4">🎬 WebM to MP4</a>
+                                </li>
+                <li><a href="/video-to-gif">🎬 Video to GIF</a></li>
+                <li><a href="/gif-to-video">🎬 GIF to Video</a></li>
+                                <li><a href="/avi-to-mp4">🎬 AVI to MP4</a>
+                                </li>
+                                <li><a href="/mp4-to-avi">🎬 MP4 to AVI</a>
+                                </li>
+                                <li><a href="/mov-to-mp4">🎬 MOV to MP4</a>
+                                </li>
+                                <li><a href="/mp4-to-mov">🎬 MP4 to MOV</a>
+                                </li>
+                                <li><a href="/wmv-to-mp4">🎬 WMV to MP4</a>
+                                </li>
+                                <li><a href="/mp4-to-wmv">🎬 MP4 to WMV</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 📊 Spreadsheet Converters -->
+                        <li class="submenu">
+                            <a href="/spreadsheet-category">📊 Spreadsheet Converters ▸</a>
+                            <ul class="submenu-menu">
+                                <li><a href="/xls-to-csv">📊 XLS to CSV</a>
+                                </li>
+                                <li><a href="/csv-to-xls">📊 CSV to XLS</a>
+                                </li>
+                                <li><a href="/xls-to-xlsx">📊 XLS to XLSX</a>
+                                </li>
+                                <li><a href="/xlsx-to-xls">📊 XLSX to XLS</a>
+                                </li>
+                                <li><a href="/ods-to-xls">📊 ODS to XLS</a>
+                                </li>
+                                <li><a href="/xls-to-ods">📊 XLS to ODS</a>
+                                </li>
+                                <li><a href="/csv-to-xlsx">📊 CSV to XLSX</a>
+                                </li>
+                                <li><a href="/xlsx-to-csv">📊 XLSX to CSV</a>
+                                </li>
+                                <li><a href="/ods-to-xlsx">📊 ODS to XLSX</a>
+                                </li>
+                                <li><a href="/xlsx-to-ods">📊 XLSX to ODS</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 📦 Archive Converters -->
+                        <li class="submenu">
+                            <a href="/archive-category">📦 Archive Converters ▸</a>
+                            <ul class="submenu-menu">
+                                <li><a href="/zip-to-rar">📦 ZIP to RAR</a>
+                                </li>
+                                <li><a href="/rar-to-zip">📦 RAR to ZIP</a>
+                                </li>
+                                <li><a href="/7z-to-zip">📦 7Z to ZIP</a></li>
+                                <li><a href="/zip-to-7z">📦 ZIP to 7Z</a></li>
+                                <li><a href="/rar-to-7z">📦 RAR to 7Z</a></li>
+                                <li><a href="/7z-to-rar">📦 7Z to RAR</a></li>
+                                <li><a href="/tar-to-zip">📦 TAR to ZIP</a>
+                                </li>
+                                <li><a href="/zip-to-tar">📦 ZIP to TAR</a>
+                                </li>
+                                <li><a href="/gz-to-zip">📦 GZ to ZIP</a></li>
+                                <li><a href="/zip-to-gz">📦 ZIP to GZ</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+              <li><a href="/about/">About Us</a></li>
+                <li><a href="/terms/">Terms</a></li>
+                <li><a href="/contact/">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="home">
+            <section class="hero">
+                <h1>🎵 Audio Converters</h1>
+                <p>All audio conversion tools in one place.</p>
+            </section>
+            <div class="tool-container">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div class="input-section" onclick="showPage('mp3-to-wav')">
+                        <h3>🎵 MP3 to WAV</h3>
+                        <p>Convert MP3 files to WAV format.</p>
+                    </div>
+                    <div class="input-section" onclick="showPage('wav-to-mp3')">
+                        <h3>🎵 WAV to MP3</h3>
+                        <p>Convert WAV files to MP3 format.</p>
+                    </div>
+                    <div class="input-section" onclick="showPage('audio-to-mp3')">
+                        <h3>🎵 Audio to MP3</h3>
+                        <p>Convert audio files to MP3 format.</p>
+                    </div>
+                    <div class="input-section" onclick="showPage('audio-to-wav')">
+                        <h3>🎵 Audio to WAV</h3>
+                        <p>Convert audio files to WAV format.</p>
+                    </div>
+                    <div class="input-section" onclick="showPage('flac-to-mp3')">
+                        <h3>🎵 FLAC to MP3</h3>
+                        <p>Convert FLAC files to MP3 format.</p>
+                    </div>
+                    <div class="input-section" onclick="showPage('mp3-to-flac')">
+                        <h3>🎵 MP3 to FLAC</h3>
+                        <p>Convert MP3 files to FLAC format.</p>
+                    </div>
+                    <div class="input-section" onclick="showPage('ogg-to-mp3')">
+                        <h3>🎵 OGG to MP3</h3>
+                        <p>Convert OGG files to MP3 format.</p>
+                    </div>
+                    <div class="input-section" onclick="showPage('mp3-to-ogg')">
+                        <h3>🎵 MP3 to OGG</h3>
+                        <p>Convert MP3 files to OGG format.</p>
+                    </div>
+                    <div class="input-section" onclick="showPage('aac-to-mp3')">
+                        <h3>🎵 AAC to MP3</h3>
+                        <p>Convert AAC files to MP3 format.</p>
+                    </div>
+                    <div class="input-section" onclick="showPage('mp3-to-aac')">
+                        <h3>🎵 MP3 to AAC</h3>
+                        <p>Convert MP3 files to AAC format.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer from archive-category -->
+    <footer id="contact">
+        <div class="main-home-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>⚙️ Converters</h3>
+                    <a href="/document-category/">📝 Document Converters</a>
+                    <a href="/image-category/">📷 Image Converters</a>
+                    <a href="/video-category/">🎬 Video Converters</a>
+                    <a href="/audio-category/">🎵 Audio Converters</a>
+                    <a href="/spreadsheet-category/">📊 Spreadsheet Converters</a>
+                    <a href="/archive-category/">📦 Archive Converters</a>
+                </div>
+                <div class="footer-section">
+                    <h3>📚 Articles</h3>
+                    <a href="/PDF-Converters/">📄 PDF Converters</a>
+                    <a href="/JPG-to-PNG/">🖼️ JPG to PNG</a>
+                    <a href="/Online-Converters/">⚡ Why Online Converters?</a>
+                    <a href="/Audio-&-Video-Tools/">🎬 Audio & Video Tools</a>
+                    <a href="/Privacy-&-Security/">🔒 Privacy & Security</a>
+                </div>
+                <div class="footer-section">
+                    <h3>🏢 Company</h3>
+                    <a href="/about/">🏢 About Us</a>
+                    <a href="/privacy/">🔒 Privacy Policy</a>
+                    <a href="/terms/">📄 Terms</a>
+                    <a href="/contact/">📞 Contact Us</a>
+                </div>
+            </div>
+            <div class="footer-bottom">© 2025 FileConverter Pro. All rights reserved.</div>
+        </div>
+    </footer>
+    <script src="/static/script.js"></script>
+</body>
+</html>
