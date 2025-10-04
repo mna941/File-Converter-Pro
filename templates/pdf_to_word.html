@@ -26,7 +26,7 @@
                         <li class="submenu">
                             <a href="/document-category">📝 Document Converters ▸</a>
                         </li>
-                        <!-- ...other categories... -->
+                        <!-- Other categories omitted for brevity -->
                     </ul>
                 </li>
                 <li><a href="/about/">About Us</a></li>
@@ -35,6 +35,7 @@
             </ul>
         </nav>
     </header>
+
     <main>
         <div class="home">
             <section class="hero">
@@ -43,7 +44,7 @@
             </section>
             <div class="tool-container"
                 style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-height:400px;">
-                <form id="pdfToWordForm" autocomplete="off"
+                <form id="pdfToWordForm" enctype="multipart/form-data"
                     style="display:flex;flex-direction:column;align-items:center;justify-content:center;max-width:420px;width:100%;margin:0 auto;">
                     <label for="pdfFile"
                         style="font-weight:800;color:#667eea;display:block;margin-bottom:0.9em;text-align:center;">Upload
@@ -57,23 +58,21 @@
                         </span>
                         <span style="color:#764ba2;font-weight:600; height:120px;text-align:center;">Drag & drop PDF
                             here or <span style='text-decoration:underline;color:#667eea;'>browse</span></span>
-                        <input type="file" id="pdfFile" name="pdfFile" accept="application/pdf" required
+                        <input type="file" id="pdfFile" name="file" accept="application/pdf" required
                             style="display:none;">
-                            <div id="fileNameDisplay"
-                        style="display:flex;justify-content:center;align-items:center;text-align:center;color:#764ba2;font-weight:900;margin-bottom:1em;margin-bottom:1em;">
+                        <div id="fileNameDisplay"
+                            style="display:flex;justify-content:center;align-items:center;text-align:center;color:#764ba2;font-weight:900;margin-bottom:1em;">
+                        </div>
                     </div>
-                    </div>
-                    
-                    <button type="button" id="convertBtn"
+
+                    <button type="submit" id="convertBtn"
                         style="width:180%;padding:0.9em 0;font-size:1.1em;background:linear-gradient(90deg,#667eea,#764ba2);color:#fff;border:none;border-radius:8px;box-shadow:0 2px 8px #764ba233;cursor:pointer;font-weight:600;transition:background 0.2s;max-width:680px;">Convert</button>
+
                     <div id="loadingSpinner" style="display:none;text-align:center;margin:1.2em 0;">
                         <span class="loader"
                             style="display:inline-block;width:32px;height:32px;border:4px solid #764ba2;border-top:4px solid #fff;border-radius:50%;animation:spin 1s linear infinite;"></span>
                         <span style="display:block;color:#764ba2;font-weight:500;margin-top:0.7em;">Converting...</span>
                     </div>
-                    <button type="button" id="downloadBtn"
-                        style="display:none;width:180%;padding:0.9em 0;font-size:1.1em;background:linear-gradient(90deg,#764ba2,#667eea);color:#fff;border:none;border-radius:8px;box-shadow:0 2px 8px #764ba233;cursor:pointer;font-weight:600;margin-top:1em;max-width:680px;">Download
-                        Word File</button>
                 </form>
                 <style>
                     @keyframes spin {
@@ -82,74 +81,79 @@
                         }
                     }
                 </style>
+
                 <script>
-                    // Demo JS for UI feedback only
-                    const convertBtn = document.getElementById('convertBtn');
-                    const loadingSpinner = document.getElementById('loadingSpinner');
-                    const downloadBtn = document.getElementById('downloadBtn');
+                    const pdfForm = document.getElementById('pdfToWordForm');
                     const pdfFileInput = document.getElementById('pdfFile');
+                    const fileNameDisplay = document.getElementById('fileNameDisplay');
                     const pdfIcon = document.getElementById('pdfIcon');
                     const wordIcon = document.getElementById('wordIcon');
-                    let convertedFileName = '';
-let convertedFileContent = '';
-convertBtn.onclick = function () {
-    if (!pdfFileInput.files.length) {
-        alert('Please select a PDF file first.');
-        return;
-    }
-    convertBtn.style.display = 'none';
-    loadingSpinner.style.display = 'block';
-    // Read the uploaded file (for demo, just get the text content)
-    const file = pdfFileInput.files[0];
-    const fileNameDisplay = document.getElementById('fileNameDisplay');
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        convertedFileContent = e.target.result;
-        setTimeout(() => {
-            loadingSpinner.style.display = 'none';
-            downloadBtn.style.display = 'block';
-            pdfIcon.style.display = 'none';
-            wordIcon.style.display = 'inline-block';
-            // Change file name to .docx
-            const baseName = file.name.replace(/\.[^.]+$/, '');
-            convertedFileName = baseName + '.docx';
-            fileNameDisplay.textContent = convertedFileName;
-        }, 1000); // Simulate conversion
-    };
-    reader.readAsText(file);
-};
-downloadBtn.onclick = function () {
-    // Download with the converted file name and content
-    const blob = new Blob([convertedFileContent], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = convertedFileName || 'converted.docx';
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(() => {
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }, 100);
-};
+                    const loadingSpinner = document.getElementById('loadingSpinner');
+
+                    document.getElementById('pdfDropZone').addEventListener('click', function(e) {
+                        if (e.target.tagName !== 'INPUT') {
+                            pdfFileInput.click();
+                        }
+                    });
+
                     pdfFileInput.addEventListener('change', function () {
-                        const fileNameDisplay = document.getElementById('fileNameDisplay');
                         if (pdfFileInput.files.length) {
                             fileNameDisplay.textContent = pdfFileInput.files[0].name;
                         } else {
                             fileNameDisplay.textContent = '';
                         }
                     });
-                    document.getElementById('pdfDropZone').addEventListener('click', function(e) {
-    // Only trigger if not clicking the hidden input itself
-    if (e.target.tagName !== 'INPUT') {
-        document.getElementById('pdfFile').click();
-    }
-});
-                </script>
 
+                    pdfForm.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+
+                        if (!pdfFileInput.files.length) return alert('Please select a PDF file');
+
+                        const formData = new FormData();
+                        formData.append('file', pdfFileInput.files[0]);
+
+                        loadingSpinner.style.display = 'block';
+                        pdfIcon.style.display = 'inline-block';
+                        wordIcon.style.display = 'none';
+
+                        try {
+                            const response = await fetch('/pdf-to-word', {
+                                method: 'POST',
+                                body: formData
+                            });
+
+                            if (!response.ok) throw new Error('Conversion failed');
+
+                            const blob = await response.blob();
+                            const url = URL.createObjectURL(blob);
+
+                            // Show Word icon and filename
+                            pdfIcon.style.display = 'none';
+                            wordIcon.style.display = 'inline-block';
+                            const baseName = pdfFileInput.files[0].name.replace(/\.pdf$/i, '');
+                            const downloadFileName = baseName + '.docx';
+                            fileNameDisplay.textContent = downloadFileName;
+
+                            // Trigger download
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = downloadFileName;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+
+                        } catch (err) {
+                            console.error(err);
+                            alert('Conversion failed. Please try again.');
+                        } finally {
+                            loadingSpinner.style.display = 'none';
+                        }
+                    });
+                </script>
             </div>
     </main>
+
     <footer id="contact">
         <div class="main-home-container">
             <div class="footer-content">
@@ -181,7 +185,5 @@ downloadBtn.onclick = function () {
             <div class="footer-bottom">© 2025 FileConverter Pro. All rights reserved.</div>
         </div>
     </footer>
-    <script src="/static/script.js"></script>
 </body>
-
 </html>

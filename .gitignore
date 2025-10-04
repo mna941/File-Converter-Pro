@@ -1,8 +1,0 @@
-venv/
-__pycache__/
-uploads/
-downloads/
-*.pyc
-*.pyo
-*.pyd
-.env
