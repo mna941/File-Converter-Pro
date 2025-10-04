@@ -18,9 +18,10 @@ import os, subprocess
 
 def pdf_to_docx(pdf_path, out_folder, uid):
     docx_path = os.path.join(out_folder, f"{uid}.docx")
+    # Use LibreOffice (soffice) for conversion to preserve formatting
     subprocess.run([
         "soffice", "--headless", "--convert-to", "docx", "--outdir", out_folder, pdf_path
-    ])
+    ], check=True)
     return docx_path
 
 
