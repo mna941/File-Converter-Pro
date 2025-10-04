@@ -8,3 +8,4 @@ PyMuPDF==1.26.4
 fpdf==1.7.2
 lxml==6.0.2
 xhtml2pdf==0.2.15
+gunicorn
